@@ -98,7 +98,7 @@ export const ServicesGrid = ({ limit }: { limit?: number }) => {
           <h3 className="font-display text-xl font-bold mb-2">{s.title}</h3>
           <p className="text-sm text-primary mb-3">{s.tagline}</p>
           <p className="text-sm text-muted-foreground leading-relaxed mb-5">{s.description}</p>
-          <ul className="space-y-2 mb-6">
+          <ul className="space-y-2">
             {s.features.slice(0, 3).map((f) => (
               <li key={f} className="flex items-start gap-2 text-sm text-muted-foreground">
                 <Check className="h-4 w-4 text-primary shrink-0 mt-0.5" />
@@ -106,14 +106,6 @@ export const ServicesGrid = ({ limit }: { limit?: number }) => {
               </li>
             ))}
           </ul>
-          <div className="flex items-center justify-between pt-4 border-t border-border/60">
-            <span className="text-sm font-semibold text-foreground">{s.priceRange}</span>
-            <Button asChild variant="ghost" size="sm" className="rounded-full">
-              <Link to="/contact">
-                Enquire <ArrowRight className="h-3 w-3" />
-              </Link>
-            </Button>
-          </div>
         </motion.article>
       ))}
     </div>

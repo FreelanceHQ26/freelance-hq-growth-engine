@@ -8,9 +8,7 @@ import { SectionHeading } from "@/components/SectionHeading";
 import { Counter } from "@/components/Counter";
 import { ServicesGrid, services } from "@/components/ServicesGrid";
 import heroBg from "@/assets/hero-bg.jpg";
-import portfolio1 from "@/assets/portfolio-1.jpg";
-import portfolio2 from "@/assets/portfolio-2.jpg";
-import portfolio3 from "@/assets/portfolio-3.jpg";
+import { loadProjects } from "@/lib/portfolio-store";
 
 const reasons = [
   { icon: Zap, title: "Lightning Fast Delivery", text: "Most projects shipped in 3–7 days. No long agency timelines." },
@@ -37,6 +35,7 @@ const faqs = [
 
 const Index = () => {
   const [openFaq, setOpenFaq] = useState<number | null>(0);
+  const previewProjects = loadProjects().slice(0, 3);
 
   return (
     <>
@@ -202,28 +201,38 @@ const Index = () => {
           title={<>Crafted with <span className="text-gradient">care</span></>}
           description="A glimpse of what we've shipped recently."
         />
-        <div className="mt-14 grid gap-6 md:grid-cols-3">
-          {[portfolio1, portfolio2, portfolio3].map((src, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.1 }}
-              className="group relative overflow-hidden rounded-2xl border border-border bg-surface aspect-[4/3]"
-            >
-              <img
-                src={src}
-                alt="Portfolio project mockup"
-                width={1024}
-                height={768}
-                loading="lazy"
-                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent opacity-80" />
-            </motion.div>
-          ))}
-        </div>
+        {previewProjects.length > 0 ? (
+          <div className="mt-14 grid gap-6 md:grid-cols-3">
+            {previewProjects.map((p, i) => (
+              <motion.div
+                key={p.id}
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: i * 0.1 }}
+                className="group relative overflow-hidden rounded-2xl border border-border bg-surface aspect-[4/3]"
+              >
+                <img
+                  src={p.image}
+                  alt={`${p.title} project`}
+                  loading="lazy"
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
+                <div className="absolute bottom-4 left-4 right-4">
+                  <div className="font-display font-bold text-foreground">{p.title}</div>
+                  <div className="text-xs text-muted-foreground">{p.category}</div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        ) : (
+          <div className="mt-14 max-w-xl mx-auto text-center bg-gradient-card border border-border rounded-2xl p-10">
+            <p className="text-muted-foreground">
+              Fresh projects coming soon. Visit the portfolio page for the full showcase.
+            </p>
+          </div>
+        )}
         <div className="mt-12 text-center">
           <Button asChild variant="glass" size="lg">
             <Link to="/portfolio">View all projects <ArrowRight className="h-4 w-4" /></Link>

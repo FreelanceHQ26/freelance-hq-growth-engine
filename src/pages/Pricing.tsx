@@ -5,6 +5,7 @@ import { SEO } from "@/components/SEO";
 import { SectionHeading } from "@/components/SectionHeading";
 import { Button } from "@/components/ui/button";
 import { services } from "@/components/ServicesGrid";
+import { RazorpayPayment } from "@/components/RazorpayPayment";
 
 const Pricing = () => {
   return (
@@ -81,6 +82,8 @@ const Pricing = () => {
           </Button>
         </div>
       </section>
+
+      <RazorpayPayment />
     </>
   );
 };
